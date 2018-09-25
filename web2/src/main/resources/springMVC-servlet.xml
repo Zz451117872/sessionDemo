@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <!--&lt;!&ndash; 拦截器 &ndash;&gt;-->
+    <!--<mvc:interceptors>-->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/**"/>-->
+            <!--<bean class="com.zheng.upms.server.interceptor.LoginInterceptor"></bean>-->
+        <!--</mvc:interceptor>-->
+        <!--&lt;!&ndash;<mvc:interceptor>&ndash;&gt;-->
+            <!--&lt;!&ndash;<mvc:mapping path="/**"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<mvc:exclude-mapping path="/**/*.jsp" />&ndash;&gt;-->
+            <!--&lt;!&ndash;<mvc:exclude-mapping path="/manage/**" />&ndash;&gt;-->
+            <!--&lt;!&ndash;<mvc:exclude-mapping path="/sat/**" />&ndash;&gt;-->
+            <!--&lt;!&ndash;<bean class="com.zheng.upms.server.interceptor.AppInterceptor"></bean>&ndash;&gt;-->
+        <!--&lt;!&ndash;</mvc:interceptor>&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash; 获取登录信息 &ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;<mvc:interceptor>&ndash;&gt;-->
+            <!--&lt;!&ndash;<mvc:mapping path="/manage/**"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<bean class="com.zheng.upms.server.interceptor.UpmsInterceptor"></bean>&ndash;&gt;-->
+        <!--&lt;!&ndash;</mvc:interceptor>&ndash;&gt;-->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/user/**"/>-->
+            <!--<bean class="com.zheng.upms.server.interceptor.UserInterceptor"></bean>-->
+        <!--</mvc:interceptor>-->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/**"/>-->
+            <!--<bean class="com.zheng.upms.server.interceptor.WebClientInterceptor"></bean>-->
+        <!--</mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
+
+    <context:component-scan base-package="com.jie.web2.controller"/>
+    <context:annotation-config/>
+    <aop:config proxy-target-class="true"/>
+
+    <!-- 返回ResponseBody响应类型 -->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <bean id="redisHttpSessionConfiguration"
+          class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
+        <property name="maxInactiveIntervalInSeconds" value="600"/>
+    </bean>
+
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="100" />
+        <property name="maxIdle" value="10" />
+    </bean>
+
+    <bean id="jedisConnectionFactory"
+          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" destroy-method="destroy">
+        <property name="hostName" value="localhost"/>
+        <property name="port" value="6379"/>
+        <property name="password" value="com.ant.com.redis" />
+        <property name="timeout" value="3000"/>
+        <property name="usePool" value="true"/>
+        <property name="poolConfig" ref="jedisPoolConfig"/>
+    </bean>
+
+    <!-- Jsp视图 -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="order" value="1"/>
+        <property name="prefix" value="/WEB-INF/jsp"/>
+        <property name="suffix" value=""/>
+        <property name="contentType" value="text/html; charset=utf-8"/>
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+    </bean>
+
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="209715200" />
+        <property name="defaultEncoding" value="UTF-8" />
+        <property name="resolveLazily" value="true" />
+    </bean>
+</beans>
