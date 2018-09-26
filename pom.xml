@@ -11,6 +11,7 @@
     <modules>
         <module>web1</module>
         <module>web2</module>
+        <module>common</module>
     </modules>
 
 

@@ -21,14 +21,24 @@
     </filter-mapping>
 
 
+    <!--<filter>-->
+        <!--<filter-name>springSessionRepositoryFilter</filter-name>-->
+        <!--<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>springSessionRepositoryFilter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
+
     <filter>
-        <filter-name>springSessionRepositoryFilter</filter-name>
+        <filter-name>SSOFilter</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>springSessionRepositoryFilter</filter-name>
+        <filter-name>SSOFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
 
 
     <!-- springMVC的核心控制器 -->

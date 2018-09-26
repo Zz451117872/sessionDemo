@@ -18,6 +18,8 @@ public class Web1Controller {
     @RequestMapping(value = "/login" , method =  RequestMethod.POST )
     @ResponseBody
     public String login( String name , String password , HttpServletRequest request){
+
+        System.out.println( "id xxxx : " + request.getSession().getId() );
         request.getSession().setAttribute("name" , name );
         request.getSession().setAttribute("password" , password );
         return "success!  name:" + name +" password: " + password;

@@ -54,25 +54,34 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-    <bean id="redisHttpSessionConfiguration"
-          class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
-        <property name="maxInactiveIntervalInSeconds" value="600"/>
+
+
+
+    <bean id="mySessionRepositoty" class="com.jie.pojo.MySessionRepositoty"></bean>
+
+    <bean id="SSOFilter" class="com.jie.pojo.SSOFilter">
+        <constructor-arg ref="mySessionRepositoty"/>
     </bean>
 
-    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
-        <property name="maxTotal" value="100" />
-        <property name="maxIdle" value="10" />
-    </bean>
+    <!--<bean id="redisHttpSessionConfiguration"-->
+          <!--class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">-->
+        <!--<property name="maxInactiveIntervalInSeconds" value="600"/>-->
+    <!--</bean>-->
 
-    <bean id="jedisConnectionFactory"
-          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" destroy-method="destroy">
-        <property name="hostName" value="localhost"/>
-        <property name="port" value="6379"/>
-        <property name="password" value="com.ant.com.redis" />
-        <property name="timeout" value="3000"/>
-        <property name="usePool" value="true"/>
-        <property name="poolConfig" ref="jedisPoolConfig"/>
-    </bean>
+    <!--<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">-->
+        <!--<property name="maxTotal" value="100" />-->
+        <!--<property name="maxIdle" value="10" />-->
+    <!--</bean>-->
+
+    <!--<bean id="jedisConnectionFactory"-->
+          <!--class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" destroy-method="destroy">-->
+        <!--<property name="hostName" value="localhost"/>-->
+        <!--<property name="port" value="6379"/>-->
+        <!--<property name="password" value="com.ant.com.redis" />-->
+        <!--<property name="timeout" value="3000"/>-->
+        <!--<property name="usePool" value="true"/>-->
+        <!--<property name="poolConfig" ref="jedisPoolConfig"/>-->
+    <!--</bean>-->
 
     <!-- Jsp视图 -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
