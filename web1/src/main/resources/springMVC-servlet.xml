@@ -10,6 +10,9 @@
         http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 
+    <context:component-scan base-package="com.jie.web1" >
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
+    </context:component-scan>
     <!--&lt;!&ndash; 拦截器 &ndash;&gt;-->
     <!--<mvc:interceptors>-->
         <!--<mvc:interceptor>-->
@@ -57,11 +60,11 @@
 
 
 
-    <bean id="mySessionRepositoty" class="com.jie.pojo.MySessionRepositoty"></bean>
+    <!--<bean id="mySessionRepositoty" class="com.jie.pojo.MySessionRepositoty"></bean>-->
 
-    <bean id="SSOFilter" class="com.jie.pojo.SSOFilter">
-        <constructor-arg ref="mySessionRepositoty"/>
-    </bean>
+    <!--<bean id="SSOFilter" class="com.jie.pojo.SSOFilter">-->
+        <!--<constructor-arg ref="mySessionRepositoty"/>-->
+    <!--</bean>-->
 
     <!--<bean id="redisHttpSessionConfiguration"-->
           <!--class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">-->
